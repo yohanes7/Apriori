@@ -23,7 +23,7 @@ class Apriori2:
 
             # Menggabungkan item_set dan eliminasi yang kembar
             candidate_set = self.get_union(current_L_set, k)
-            # Kombinasi item yang tidak ada pada item_set sebelum nya
+            # membuat Kombinasi item yang tidak ada pada current_L_set sebelum nya
             candidate_set = self.pruning(candidate_set, current_L_set, k - 1)
 
             # Mencari item yang berada di atas nilai min_support
@@ -39,6 +39,7 @@ class Apriori2:
         rules = self.association_rule(global_freq_item_set, global_item_set_with_sup, min_confidence)
         return global_freq_item_set, rules
 
+        #Pengambilan data dari excell
     def get_from_dir(self, file_dir):
         data = pd.read_excel(file_dir, sheet_name="2020-2021")
         a = data.groupby("TID")
@@ -52,6 +53,7 @@ class Apriori2:
             list_item.append(arr_groups)
         return list_item
 
+        # Menghitung penjualan terbanyak
     def get_top_item(self, filDir):
         data = pd.read_excel(filDir, sheet_name="2020-2021")
         unique = data.drop('TID', axis=1)
@@ -60,6 +62,7 @@ class Apriori2:
         data_sort = unique.sort_values('Jumlah', ascending=False)
         return data_sort
 
+        # Merger item dengan nama yang sama dalam 1 baris
     def get_item_set(self, item_list):
         tempItemSet = set()
         for item_set in item_list:
